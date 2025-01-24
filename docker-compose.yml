@@ -1,0 +1,76 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      args:
+        USER_ID: '${WWWUSER:-1000}'
+        GROUP_ID: '${WWWGROUP:-1000}'
+        USER: '${USER:-whoami}'
+    container_name: stock-app
+    restart: always
+    working_dir: /var/www/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "9000:9003"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/php/config/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - stock_network
+
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: stock-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - stock_network
+
+  db:
+    container_name: stock-db
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stockuser
+      MYSQL_PASSWORD: stock123
+      MYSQL_ROOT_PASSWORD: root123
+    networks:
+      - stock_network
+
+
+  rabbitmq:
+    container_name: stock-rabbitmq
+    image: rabbitmq:4.0-management-alpine
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: stockuser
+      RABBITMQ_DEFAULT_PASS: stock123
+    networks:
+      - stock_network
+
+  redis:
+    container_name: stock-redis
+    image: redis:7.4
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - stock_network
+
+networks:
+  stock_network:
+    driver: bridge
