@@ -20,7 +20,7 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN docker-php-ext-configure intl
-RUN docker-php-ext-install pdo pdo_mysql intl
+RUN docker-php-ext-install pdo pdo_mysql intl pcntl sockets
 
 COPY ./docker/php/config/xdebug.ini "${PHP_INI_DIR}/conf.d"
 

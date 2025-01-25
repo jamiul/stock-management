@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Define the base directory
+BASE_DIR="docker/rabbitmq"
+# Check if the base directory exists
+
+if [ ! -d "$BASE_DIR" ]; then
+    echo "Base directory '$BASE_DIR' does not exist. Creating it now..."
+    mkdir -p "$BASE_DIR"
+    echo "Directories created successfully."
+else
+    echo "Base directory '$BASE_DIR' already exists."
+fi
+# mkdir -p docker/rabbitmq
+sudo chown -R $USER:$USER docker/rabbitmq/
+sudo chmod -R 777 docker/rabbitmq/
+
 docker compose up -d
 
 sleep 5
