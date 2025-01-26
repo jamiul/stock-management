@@ -21,6 +21,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql intl pcntl sockets
+# Install redis
+RUN pecl install redis && docker-php-ext-enable redis
+
 
 COPY ./docker/php/config/xdebug.ini "${PHP_INI_DIR}/conf.d"
 
