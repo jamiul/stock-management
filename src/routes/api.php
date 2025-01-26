@@ -8,7 +8,6 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProductController;
 
 // public routes
-// show user
 Route::get('/users/{user}', [UserController::class, 'show'])
     ->name('user.show');
 Route::post('/register', [UserController::class, 'register'])
