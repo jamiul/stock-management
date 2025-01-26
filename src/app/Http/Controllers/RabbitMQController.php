@@ -54,7 +54,7 @@ class RabbitMQController extends Controller
 
         try {
             /** Usar apenas se precisar deixar o canal aberto */
-            $this->channel->consume();
+            // $this->channel->consume();
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage());
         }
@@ -73,7 +73,7 @@ class RabbitMQController extends Controller
 
         try {
             /** Usar apenas se precisar deixar o canal aberto */
-            $this->channel->consume();
+            // $this->channel->consume();
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage());
         }
