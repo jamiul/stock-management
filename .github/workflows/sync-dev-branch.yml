@@ -16,21 +16,23 @@ jobs:
         with:
           php-version: 8.4
 
-      - name: Give permissions
+      - name: Give permissions to database directory
         run: chmod -R 777 ./src/database
-      - name: Create database
+
+      - name: Create SQLite database
         run: touch ./src/database/database.sqlite
-      - name: Give permissions to database
+
+      - name: Give permissions to SQLite database
         run: chmod -R 777 ./src/database/database.sqlite
 
-      - name: Copy .env
+      - name: Copy .env.test to .env
         run: cp ./src/.env.test ./src/.env
 
-      - name: Install app
-        run: composer install
+      - name: Install Composer dependencies
+        run: cd src && composer install
 
-      - name: Run migrations
-        run: php artisan migrate
+      - name: Run Laravel migrations
+        run: cd src && php artisan migrate
 
-      - name: Test PHPUnit
-        run: ./vendor/bin/phpunit
+      - name: Run PHPUnit tests
+        run: cd src && ./vendor/bin/phpunit
