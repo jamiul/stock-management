@@ -24,7 +24,7 @@ jobs:
         run: chmod -R 777 ./src/database/database.sqlite
 
       - name: Copy .env
-        run: cp .env.test .env
+        run: cp ./src/.env.test ./src/.env
 
       - name: Install app
         run: composer install
