@@ -1,6 +1,4 @@
-./mysql
 /mysql
-./docker/rabbitmq
 docker/rabbitmq/
 docker/php/conf
 docker/php/logs
