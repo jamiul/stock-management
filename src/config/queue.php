@@ -96,6 +96,9 @@ return [
                     'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
                     'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
                     'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
+                    'heartbeat' => env('RABBITMQ_HEARTBEAT', 30),
+                    'read_timeout' => env('RABBITMQ_READ_TIMEOUT', 60),
+                    'write_timeout' => env('RABBITMQ_WRITE_TIMEOUT', 60),
                 ],
             ],
             /*

@@ -60,10 +60,9 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: stockuser
       RABBITMQ_DEFAULT_PASS: stock123
-    # volumes:
-    #   - ./docker/rabbitmq/etc/:/etc/rabbitmq/
-    #   - ./docker/rabbitmq/data/:/var/lib/rabbitmq/mnesia
-    #   - ./docker/rabbitmq/logs/:/var/log/rabbitmq/
+    volumes:
+      - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - stock_network
 
@@ -73,6 +72,15 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - stock_network
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "mailhog"
+    ports:
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - stock_network
 

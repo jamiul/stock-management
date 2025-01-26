@@ -1,14 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RabbitMQController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Jobs\ProcessRabbitMQMessage;
+Route::get('/send', [RabbitMQController::class, 'send']);
+Route::get('/consumer/create', [RabbitMQController::class, 'consumerCreatePDF']);
+Route::get('/consumer/log', [RabbitMQController::class, 'consumerLogPDF']);
+
 Route::get('/send-message', function () {
-    ProcessRabbitMQMessage::dispatch();
+    $rabbitMQService = app()->make(\App\Services\RabbitMQService::class);
+    $rabbitMQService->publishMessage('say_hi', [
+        'message' => 'Hello from Laravel'
+    ]);
 
     return 'Message sent to RabbitMQ!';
 });
