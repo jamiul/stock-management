@@ -16,9 +16,11 @@ jobs:
         with:
           php-version: 8.4
 
-      - name: Create database
+      - name: Give permissions
         run: chmod -R 777 ./database
+      - name: Create database
         run: touch ./database/database.sqlite
+      - name: Give permissions to database
         run: chmod -R 777 ./database/database.sqlite
 
       - name: Copy .env
