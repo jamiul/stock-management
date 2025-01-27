@@ -7,15 +7,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Send a message to RabbitMQ
 Route::get('/send', [RabbitMQController::class, 'send']);
 Route::get('/consumer/create', [RabbitMQController::class, 'consumerCreatePDF']);
 Route::get('/consumer/log', [RabbitMQController::class, 'consumerLogPDF']);
 
-Route::get('/send-message', function () {
+// Test rabbitmq connection
+Route::get('/connect-rabbitmq', function () {
     $rabbitMQService = app()->make(\App\Services\RabbitMQService::class);
     $rabbitMQService->publishMessage('say_hi', [
         'message' => 'Hello from Laravel'
     ]);
 
-    return 'Message sent to RabbitMQ!';
+    return 'Connected to RabbitMQ!';
+});
+
+// Test sending email
+Route::get('/send-email', function () {
+    $product = App\Models\Product::find(1);
+    \App\Jobs\SendLowStockNotification::dispatch($product);
+
+    return 'Email sent!';
 });

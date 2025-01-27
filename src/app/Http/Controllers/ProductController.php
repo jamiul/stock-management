@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Redis;
+use App\Jobs\SendLowStockNotification;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Interfaces\ProductRepositoryInterface;
@@ -66,6 +67,11 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->updateProduct($product, $request->all());
 
+        if($product->stock->quantity < Product::LOW_STOCK_THRESHOLD) {
+            // Send email notification
+            SendLowStockNotification::dispatch($product);
+        }
+
         // Clear Redis cache for the product
         Redis::del("product:{$product->id}");
 
@@ -75,7 +81,7 @@ class ProductController extends Controller
     public function destroy(Product $product): JsonResponse
     {
         $this->productRepository->deleteProduct($product);
-        
+
         // Clear Redis cache for the product
         Redis::del("product:{$product->id}");
 

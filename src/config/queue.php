@@ -74,39 +74,31 @@ return [
 
         'rabbitmq' => [
             'driver' => 'rabbitmq',
-            'hosts' => [
-                [
-                    'host' => env('RABBITMQ_HOST', 'rabbitmq'),
-                    'port' => env('RABBITMQ_PORT', 15672),
-                    'user' => env('RABBITMQ_USER', 'stockuser'),
-                    'password' => env('RABBITMQ_PASSWORD', 'stock123'),
-                    'vhost' => env('RABBITMQ_VHOST', '/'),
-                ],
-            ],
+            'host' => env('RABBITMQ_HOST', 'stock-rabbitmq'), // Use 'host' instead of 'hosts'
+            'port' => env('RABBITMQ_PORT', 5672),
+            'vhost' => env('RABBITMQ_VHOST', '/'),
+            'login' => env('RABBITMQ_USER', 'stockuser'), // Use 'login' instead of 'user'
+            'password' => env('RABBITMQ_PASSWORD', 'stock123'),
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
             'options' => [
-                'queue' => [
-                'exchange' => 'your-exchange',
-                'exchange_type' => 'direct',
-                'prioritize_delayed' => false,
-                'exchange_routing_key' => '',
-            ],
+                'exchange' => [
+                    'name' => env('RABBITMQ_EXCHANGE_NAME', 'default'),
+                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
+                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+                ],
                 'ssl_options' => [
                     'cafile' => env('RABBITMQ_SSL_CAFILE', null),
                     'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
                     'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
                     'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
                     'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
-                    'heartbeat' => env('RABBITMQ_HEARTBEAT', 30),
-                    'read_timeout' => env('RABBITMQ_READ_TIMEOUT', 60),
-                    'write_timeout' => env('RABBITMQ_WRITE_TIMEOUT', 60),
                 ],
+                'heartbeat' => env('RABBITMQ_HEARTBEAT', 30),
+                'read_timeout' => env('RABBITMQ_READ_TIMEOUT', 60),
+                'write_timeout' => env('RABBITMQ_WRITE_TIMEOUT', 60),
             ],
-            /*
-             * Set to "horizon" if you wish to use Laravel Horizon.
-             */
             'worker' => env('RABBITMQ_WORKER', 'default'),
-            'timeout' => 30, // Increase the timeout value
-        ],
+    ],
 
     ],
 
