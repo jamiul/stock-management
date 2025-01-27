@@ -51,7 +51,7 @@ class ProductController extends Controller
         $product = $this->productRepository->createProduct($request->all());
 
         // Clear products cache
-        Redis::del('products.all');
+        Redis::del('product.all');
 
         return response()->json($product, 201);
     }

@@ -8,9 +8,9 @@ Route::get('/', function () {
 });
 
 // Send a message to RabbitMQ
-Route::get('/send', [RabbitMQController::class, 'send']);
-Route::get('/consumer/create', [RabbitMQController::class, 'consumerCreatePDF']);
-Route::get('/consumer/log', [RabbitMQController::class, 'consumerLogPDF']);
+// Route::get('/send', [RabbitMQController::class, 'send']);
+// Route::get('/consumer/create', [RabbitMQController::class, 'consumerCreatePDF']);
+// Route::get('/consumer/log', [RabbitMQController::class, 'consumerLogPDF']);
 
 // Test rabbitmq connection
 Route::get('/connect-rabbitmq', function () {
