@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const LOW_STOCK_THRESHOLD = 10;
+
     protected $fillable = [
         'name',
         'price',

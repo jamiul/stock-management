@@ -84,6 +84,7 @@ POST /api/products/
 | `name`      | `string` | **Required**. name of item to store |
 | `description`      | `string` | **Required**. description of item to store |
 | `price`      | `integer` | **Required**. description of item to store |
+| `quantity`      | `integer` | **Not Required**. description of item to store |
 
 #### Update an existing product
 
@@ -96,6 +97,7 @@ PUT /api/products/${id}
 | `name`      | `string` | **Required**. name of item to store |
 | `description`      | `string` | **Required**. description of item to store |
 | `price`      | `integer` | **Required**. description of item to store |
+| `quantity`      | `integer` | **Not Required**. description of item to store |
 
 #### Delete an existing product
 
